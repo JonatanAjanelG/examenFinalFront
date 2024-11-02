@@ -1,0 +1,44 @@
+/* Tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Botones */
+button.eliminar {
+  background-color: #DC3545; /* Rojo */
+  color: white;
+}
+
+button.regresar, button.buscar {
+  background-color: #0800ff; /* Azul */
+  color: white;
+}
+
+button:hover.regresa {
+  background-color: #00b3428f;
+}
+
+/* Centrar botones */
+.button-container {
+  display: flex;
+  justify-content: center; /* Alinea horizontalmente los botones */
+  gap: 10px; /* Espacio entre los botones */
+  margin-top: 20px; /* Espacio superior */
+}

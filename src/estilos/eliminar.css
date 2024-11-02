@@ -1,0 +1,62 @@
+/* Eliminar.css */
+
+/* Botón de eliminar en rojo */
+button.eliminar {
+    background-color: #DC3545; /* Rojo */
+    color: white;
+  }
+  
+  button:hover.eliminar {
+    background-color: #c82333;
+  }
+  
+  /* Botón de regresar en azul */
+  button.regresar {
+    background-color: #007BFF; /* Azul */
+    color: white;
+  }
+  
+  button:hover.regresar {
+    background-color: #0056b3;
+  }
+  
+  /* Ingresar.css */
+
+/* Contenedor de los botones centrados */
+.button-container {
+    display: flex;
+    justify-content: center; /* Centra los botones horizontalmente */
+    gap: 10px; /* Espacio entre los botones */
+    margin-top: 20px; /* Espacio superior entre los botones y el formulario */
+  }
+  
+  /* Botón de eliminar en rojo */
+  button.eliminar {
+    background-color: #DC3545; /* Rojo */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover.eliminar {
+    background-color: #c82333;
+  }
+  
+  /* Botón de regresar en azul */
+  button.regresar {
+    background-color: #007BFF; /* Azul */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover.regresar {
+    background-color: #0056b3;
+  }
+  
