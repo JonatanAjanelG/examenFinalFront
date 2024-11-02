@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../estilos/Ingresar.css'; // Importa el archivo CSS
-import Modal from './Modal'; // Importa el componente modal
+import '../estilos/Ingresar.css';
+import Modal from './Modal';
 
 const Ingresar = () => {
   const [formData, setFormData] = useState({
     titulo: '',
     descricpcion: '',
-    completada: '', // Deja vacío para la opción predeterminada
+    completada: '',
     fecha_creacion: '',
     prioridad: '',
     asignado_a: '',
@@ -16,14 +16,14 @@ const Ingresar = () => {
   });
 
   const [mensaje, setMensaje] = useState('');
-  const [showModal, setShowModal] = useState(false); // Estado para controlar el modal
-  const navigate = useNavigate(); // Hook para manejar la navegación
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: name === 'completada' ? (value === 'si') : value, // Convertimos "si" y "no" a booleanos
+      [name]: name === 'completada' ? (value === 'si') : value,
     });
   };
 
@@ -43,27 +43,27 @@ const Ingresar = () => {
       if (response.ok) {
         const data = await response.json();
         setMensaje(`Datos enviados correctamente. El ID del registro es: ${data.proyecto.id}`);
-        setShowModal(true); // Muestra el modal cuando los datos se envían correctamente
+        setShowModal(true);
         setFormData({
           titulo: '',
           descricpcion: '',
-          completada: '',
+          completada: '', // Se restablece a "Elija una opción"
           fecha_creacion: '',
-          prioridad: '',
+          prioridad: '', // Restaura a la opción predeterminada "Elija una opción"
           asignado_a: '',
-          categorias: '',
+          categorias: '', // Restaura a la opción predeterminada "Elija una opción"
           costo_proyecto: '',
         });
       } else {
-        const errorData = await response.json(); // Obtener el error de la respuesta
-        console.log('Error al enviar los datos:', errorData); // Ver el error en la consola para diagnóstico
+        const errorData = await response.json();
+        console.log('Error al enviar los datos:', errorData);
         setMensaje('Error al enviar los datos.');
-        setShowModal(true); // Muestra el modal en caso de error
+        setShowModal(true);
       }
     } catch (error) {
       console.error('Ocurrió un error al enviar los datos:', error);
       setMensaje('Ocurrió un error al enviar los datos.');
-      setShowModal(true); // Muestra el modal en caso de error
+      setShowModal(true);
     }
   };
 
@@ -72,13 +72,13 @@ const Ingresar = () => {
   };
 
   const closeModal = () => {
-    setShowModal(false); // Cierra el modal cuando se presiona "Cerrar"
+    setShowModal(false);
   };
 
   return (
     <div className="form-container">
       <h2 className="form-title">Registro de Proyectos UMG 2024 :D </h2>
-      
+
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="titulo">Título:</label>
@@ -109,7 +109,7 @@ const Ingresar = () => {
           <select
             id="completada"
             name="completada"
-            value={formData.completada ? 'si' : 'no'}
+            value={formData.completada === '' ? '' : (formData.completada ? 'si' : 'no')}
             onChange={handleChange}
             required
           >
@@ -168,9 +168,11 @@ const Ingresar = () => {
             required
           >
             <option value="">Elija una opción</option>
-            <option value="clasificacion">Clasificación</option>
-            <option value="tipo de tarea">Tipo de tarea</option>
-            <option value="opcional">Opcional</option>
+            <option value="implementacion_funcionalidad">Implementación de Funcionalidad</option>
+            <option value="correccion_errores">Corrección de Errores</option>
+            <option value="optimizacion_codigo">Optimización de Código</option>
+            <option value="documentacion">Documentación</option>
+            <option value="testing">Testing</option>
           </select>
         </div>
 
@@ -193,7 +195,6 @@ const Ingresar = () => {
         </div>
       </form>
 
-      {/* Modal para mostrar el mensaje */}
       {showModal && <Modal mensaje={mensaje} closeModal={closeModal} />}
     </div>
   );

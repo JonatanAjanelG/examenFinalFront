@@ -1,32 +1,31 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../estilos/buscar.css'; // Importa el archivo CSS
-import Modal from './Modal'; // Importa el componente Modal
+import '../estilos/buscar.css';
+import Modal from './Modal';
 
 const BuscarUsuario = () => {
-  const [id, setId] = useState(''); // Estado para almacenar el ID del proyecto
-  const [usuario, setUsuario] = useState(null); // Estado para almacenar los datos del proyecto específico
-  const [proyectos, setProyectos] = useState([]); // Estado para almacenar los proyectos
-  const [mensaje, setMensaje] = useState(''); // Estado para mostrar mensajes de éxito o error
-  const [showModal, setShowModal] = useState(false); // Estado para controlar la visibilidad del modal
-  const navigate = useNavigate(); // Hook para manejar la navegación
+  const [id, setId] = useState('');
+  const [usuario, setUsuario] = useState(null);
+  const [proyectos, setProyectos] = useState([]);
+  const [mensaje, setMensaje] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
-  // Función para manejar el cambio en el input de ID
   const handleChange = (e) => {
     setId(e.target.value);
   };
 
-  // Función para obtener los datos del proyecto específico
   const handleBuscarUsuario = async (e) => {
     e.preventDefault();
 
     if (!id) {
       setMensaje('Por favor, ingrese un ID válido.');
-      setShowModal(true); // Mostrar el modal con el mensaje
+      setShowModal(true);
       return;
     }
 
-    const apiUrl = `https://examenfinalback.onrender.com/api/proyectos/${id}`; // URL de la API para obtener el proyecto por ID
+    setProyectos([]); // Limpiar la lista de proyectos antes de buscar un proyecto específico
+    const apiUrl = `https://examenfinalback.onrender.com/api/proyectos/${id}`;
 
     try {
       const response = await fetch(apiUrl, {
@@ -35,23 +34,24 @@ const BuscarUsuario = () => {
 
       if (response.ok) {
         const data = await response.json();
-        setUsuario(data.proyecto); // Accedemos a la propiedad "proyecto" dentro de la respuesta
+        setUsuario(data.proyecto);
         setMensaje('');
-        setShowModal(false); // Cerrar el modal si se encuentra el proyecto
+        setShowModal(false);
       } else {
         setMensaje('Proyecto no encontrado. Verifique el ID.');
-        setUsuario(null); // Limpiar los datos si no se encuentra el proyecto
-        setShowModal(true); // Mostrar el modal con el mensaje
+        setUsuario(null);
+        setShowModal(true);
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);
       setMensaje('Ocurrió un error al buscar el proyecto.');
-      setUsuario(null); // Limpiar los datos en caso de error
-      setShowModal(true); // Mostrar el modal con el mensaje de error
+      setUsuario(null);
+      setShowModal(true);
     }
+
+    setId(''); // Limpiar el campo de entrada de ID después de buscar
   };
 
-  // Función para obtener todos los proyectos
   const handleVerProyectos = async () => {
     const apiUrl = 'https://examenfinalback.onrender.com/api/proyectos';
 
@@ -62,30 +62,29 @@ const BuscarUsuario = () => {
 
       if (response.ok) {
         const data = await response.json();
-        setProyectos(data.proyectos); // Almacenar la lista de proyectos
+        setProyectos(data.proyectos);
+        setUsuario(null);
         setMensaje('');
-        setShowModal(false); // Cerrar el modal si se encuentran proyectos
+        setShowModal(false);
       } else {
         setMensaje('No se encontraron proyectos.');
-        setProyectos([]); // Limpiar los datos si no se encuentran proyectos
-        setShowModal(true); // Mostrar el modal con el mensaje
+        setProyectos([]);
+        setShowModal(true);
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);
       setMensaje('Ocurrió un error al buscar los proyectos.');
-      setProyectos([]); // Limpiar los datos en caso de error
-      setShowModal(true); // Mostrar el modal con el mensaje de error
+      setProyectos([]);
+      setShowModal(true);
     }
   };
 
-  // Función para cerrar el modal
   const closeModal = () => {
-    setShowModal(false); // Cerrar el modal
+    setShowModal(false);
   };
 
-  // Función para regresar a la página anterior
   const handleRegresar = () => {
-    navigate('/'); // Redirige a la página de inicio o a la ruta que desees
+    navigate('/');
   };
 
   return (
@@ -113,7 +112,6 @@ const BuscarUsuario = () => {
         </div>
       </form>
 
-      {/* Mostrar la tabla de datos si el proyecto específico es encontrado */}
       {usuario && (
         <div>
           <h3>Datos del Proyecto</h3>
@@ -148,7 +146,6 @@ const BuscarUsuario = () => {
         </div>
       )}
 
-      {/* Mostrar la tabla de todos los proyectos si existen proyectos */}
       {proyectos.length > 0 && (
         <div>
           <h3>Lista de Proyectos</h3>
@@ -185,7 +182,6 @@ const BuscarUsuario = () => {
         </div>
       )}
 
-      {/* Modal para mostrar el mensaje */}
       {showModal && <Modal mensaje={mensaje} closeModal={closeModal} />}
     </div>
   );

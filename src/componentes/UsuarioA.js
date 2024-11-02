@@ -22,9 +22,9 @@ const Actualizar = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ 
-      ...formData, 
-      [name]: name === 'completada' ? (value === 'si') : value 
+    setFormData({
+      ...formData,
+      [name]: name === 'completada' ? (value === 'si') : value
     });
   };
 
@@ -76,7 +76,7 @@ const Actualizar = () => {
   return (
     <div className="form-container">
       <h2 className="form-title">Actualizar Informacion Del Proyecto</h2>
-      
+
       <form onSubmit={handleSubmit}>
         {/* Campo para el ID del proyecto */}
         <div>
@@ -180,9 +180,11 @@ const Actualizar = () => {
             required
           >
             <option value="">Elija una opción</option>
-            <option value="clasificacion">Clasificación</option>
-            <option value="tipo de tarea">Tipo de tarea</option>
-            <option value="opcional">Opcional</option>
+            <option value="implementacion_funcionalidad">Implementación de Funcionalidad</option>
+            <option value="correccion_errores">Corrección de Errores</option>
+            <option value="optimizacion_codigo">Optimización de Código</option>
+            <option value="documentacion">Documentación</option>
+            <option value="testing">Testing</option>
           </select>
         </div>
 
